@@ -4,14 +4,18 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.forthenew.springbook.user.User;
 
 public class UserDaoTest {
 	Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/application-config.xml");
+//		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 		UserDao userDao = context.getBean("userDao", UserDao.class);
 		
 		User user = new User();

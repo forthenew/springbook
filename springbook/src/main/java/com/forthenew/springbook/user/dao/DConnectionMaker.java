@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DConnectionMaker implements ConnectionMaker {
 
 	@Override
-	public Connection makeconnection() throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook?characterEncoding=UTF-8", "spring", "book");
+	public Connection makeConnection() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook?serverTimezone=UTC", "spring", "book");
 		return c;
 	}
 }
