@@ -57,6 +57,7 @@ public class UserDao {
 	public void deleteAll() throws SQLException {
 		Connection c = dataSource.getConnection();
 		
+<<<<<<< Upstream, based on branch 'master' of https://github.com/forthenew/springbook.git
 		PreparedStatement ps = c.prepareStatement("DELETE FROM users");
 		ps.executeUpdate();
 		
@@ -79,5 +80,27 @@ public class UserDao {
 		
 		return count;
 		
+=======
+		PreparedStatement ps = c.prepareStatement("DELETE FROM Users");
+		ps.executeQuery();
+		ps.close();
+		c.close();
+	}
+	
+	public int getCount() throws SQLException {
+		Connection c = dataSource.getConnection();
+		
+		PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM Users");
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		rs.close();
+		ps.close();
+		c.close();
+		
+		return count;
+>>>>>>> 66c6cf2 synced
 	}
 }
