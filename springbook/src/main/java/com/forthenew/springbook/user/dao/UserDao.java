@@ -55,13 +55,11 @@ public class UserDao {
 	}
 	
 	public void deleteAll() throws SQLException {
-		Connection c = dataSource.getConnection();
-		
-		PreparedStatement ps = c.prepareStatement("DELETE FROM users");
-		ps.executeUpdate();
-		
-		ps.close();
-		c.close();
+		try ( Connection c = dataSource.getConnection();
+				PreparedStatement ps = c.prepareStatement("DELETE FROM users");) {
+			
+			ps.executeUpdate();
+		}
 	}
 	
 	public int getCount() throws SQLException {
