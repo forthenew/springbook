@@ -10,11 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.forthenew.springbook.user.User;
+import com.forthenew.springbook.user.domain.Level;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/spring/application-config.xml")
@@ -33,9 +35,9 @@ public class UserDaoTest {
 //		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/application-config.xml");
 //		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 //		dao = context.getBean("userDao", UserDao.class);
-		user1 = new User("gyumee", "박성철", "springno1");
-		user2 = new User("leegw700", "이길원", "springno2");
-		user3 = new User("bumjin", "박범진", "springno3");
+		user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0);
+		user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10);
+		user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40);
 	}
 	@Test
 	public void addAndGet() throws SQLException {
@@ -48,10 +50,10 @@ public class UserDaoTest {
 		assertThat(new Integer(2), is(dao.getCount()));
 		
 		User userget1 = dao.get(user1.getId());
-		assertThat(user1.getPassword(), is(userget1.getPassword()));
+		checkSameUser(userget1, user1);
 		
 		User userget2 = dao.get(user2.getId());
-		assertThat(user2.getPassword(), is(userget2.getPassword()));
+		checkSameUser(userget2, user2);
 	}
 	
 	@Test
@@ -107,5 +109,16 @@ public class UserDaoTest {
 		assertThat(user1.getId(), is(user2.getId()));
 //		assertThat(user1.getName(), is(user2.getName()));
 		assertThat(user1.getPassword(), is(user2.getPassword()));
+		assertThat(user1.getLevel(), is(user2.getLevel()));
+		assertThat(user1.getLogin(), is(user2.getLogin()));
+		assertThat(user1.getRecommend(), is(user2.getRecommend()));
+	}
+	
+	@Test(expected=DataAccessException.class)
+	public void duplicatKey() {
+		dao.deleteAll();
+		
+		dao.add(user1);
+		dao.add(user1);
 	}
 }
