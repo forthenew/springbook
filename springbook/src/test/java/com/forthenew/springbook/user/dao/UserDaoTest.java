@@ -35,9 +35,9 @@ public class UserDaoTest {
 //		ApplicationContext context = new ClassPathXmlApplicationContext("/spring/application-config.xml");
 //		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 //		dao = context.getBean("userDao", UserDao.class);
-		user1 = new User("gyumee", "박성철", "springno1", Level.BASIC, 1, 0);
-		user2 = new User("leegw700", "이길원", "springno2", Level.SILVER, 55, 10);
-		user3 = new User("bumjin", "박범진", "springno3", Level.GOLD, 100, 40);
+		user1 = new User("gyumee", "박성철", "springno1", "email", Level.BASIC, 1, 0);
+		user2 = new User("leegw700", "이길원", "springno2", "email", Level.SILVER, 55, 10);
+		user3 = new User("bumjin", "박범진", "springno3", "email", Level.GOLD, 100, 40);
 	}
 	@Test
 	public void addAndGet() throws SQLException {
@@ -120,5 +120,25 @@ public class UserDaoTest {
 		
 		dao.add(user1);
 		dao.add(user1);
+	}
+	
+	@Test
+	public void update() {
+		dao.deleteAll();
+		
+		dao.add(user1);
+		dao.add(user2);
+		
+		user1.setName("오민규");
+		user1.setPassword("springno6");
+		user1.setLevel(Level.GOLD);
+		user1.setLogin(1000);
+		user1.setRecommend(999);
+//		user1.update(user1);
+		
+		User user1update = dao.get(user1.getId());
+		checkSameUser(user1, user1update);
+		User user2same = dao.get(user2.getId());
+		checkSameUser(user2, user2same);
 	}
 }
