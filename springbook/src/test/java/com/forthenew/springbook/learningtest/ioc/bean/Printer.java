@@ -1,4 +1,4 @@
-package com.forthenew.springbook.learningtest.ioc;
+package com.forthenew.springbook.learningtest.ioc.bean;
 
 public interface Printer {
 	void print(String message);
