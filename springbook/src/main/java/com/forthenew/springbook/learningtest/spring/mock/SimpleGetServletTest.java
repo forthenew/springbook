@@ -1,4 +1,4 @@
-package com.forthenew.springbook.learningtest.web;
+package com.forthenew.springbook.learningtest.spring.mock;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,7 +21,7 @@ public class SimpleGetServletTest {
 		
 		SimpleGetServlet servlet = new SimpleGetServlet();
 		servlet.service(req, res);
-		servlet.init();
+//		servlet.init();
 		
 		assertThat(res.getContentAsString(), is("<HTML><BODY>Hello Spring</BODY></HTML>"));
 		assertThat(res.getContentAsString().indexOf("Hello Spring") > 0, is(true));

@@ -1,4 +1,4 @@
-package com.forthenew.springbook.learningtest.web;
+package com.forthenew.springbook.learningtest.spring.web.hello;
 
 public class HelloSpring {
 
